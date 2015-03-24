@@ -1,0 +1,209 @@
+\documentclass[12pt, onesided]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+%\geometry{landscape}                		% Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+\usepackage{amsmath}
+								% TeX will automatically convert eps --> pdf in pdflatex		
+\usepackage{float}
+\usepackage[cm]{fullpage}
+\usepackage{amssymb}
+\newcommand{\imagefolder}{Images}
+\newcounter{ImageCounter}
+\newcommand{\image}{
+
+\begin{figure}[H]
+\centering
+\newcommand{\imagepath}{\imagefolder /image\theImageCounter .jpg}
+\includegraphics[width=90mm]{\imagepath}
+\caption{\imagepath}
+\end{figure}
+
+\stepcounter{ImageCounter}
+}
+
+\newcommand{\tab}{    }
+\newcommand{\ind}{\begin{tabbing}    \=}
+\newcommand{\uind}{\-\end{tabbing}}
+\newcommand{\la}{$\lambda$}
+\newcommand{\lao}{$\lambda_0$}
+\newcommand{\p}{$\pi$}
+\title{ECEN 462: Fiber Optic Communications}
+\author{Sam Carey, from Dr. Eknoyan}
+%\date{}				% Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+\section{LaserDiode}
+\image
+\subsection{Continued: 3/10}
+For stimulated emission to dominate:\\
+i) Spontaneous Emission: Material should provide gain\\
+ii) Absorption: need POPULATION INERSION\\
+iii) In semiconductor diode lasers, these conditions can be satisfied by:\\
+\tab a) Using cleaved end facets (mirrors) to reflect light back and forth \& induce gain. Since light is an EM wave, this also establishes resonant cavity behavior.\\
+\tab b) Using high current injection across heavily doped pn junction produced in direct bandage S/C material. \image
+As light reflects back and forth, it suffers losses due to 1) absorption in material and 2) reflection at end facets.  To overcome losses, increase drive current. When total losses in one round-trip equals gain, then threshold is established.  If $I_{th}$ is increased above $I_{th}$, then lasing occurs.\image
+For light bouncing back and forth to add up constructively, the accumulated phase for one round trip must be $m(2\pi )$, where $m=1,2,3,...$ The phase accumulated over a distance of travel z: 
+\[\theta = \frac{2\pi}{\lambda_0 n z}\] 
+where n is the refractive index of material. For a round trip: 
+\[z = 2L \to \frac{2\pi}{\lambda_0 n2L}=m(2\pi)\]
+Since L is fixed, $\lambda \to \lambda m $:\\
+\[\frac{n2L}{\lambda m} = m \]
+\[\lambda = \frac{c}{f}\]
+or \[\frac{n2L}{c/f_m} = m \to f_m=\frac{mc}{2Ln}\]
+Spacing int frequency between two consecutive resonant frequencies: \[\Delta f = f_{m+1} - f_m= \frac{[(m+1)-m]c}{2Ln}=\frac{c}{cLn}\]
+from \[f = \frac{c}{\lambda}, \frac{\Delta f}{f_0} = \frac{\Delta \lambda}{\lambda_0}\]
+or \[\Delta \lambda = \frac{\lambda_0 \Delta f}{f_0} = \frac{\lambda_0 \Delta f}{c/\lambda_0} = \frac{\lambda_0^2}{c} \frac{c}{2Ln} = \frac{\lambda_0^2}{2Ln}\]
+\[(\Delta \lambda)_{lm}\text{(longitudinal modes)} = \frac{\lambda_0^2}{2Ln}\]\image
+
+Since back and forth reflecting light which induces gain has a gaussian spectral distribution, therefore the induced gain function also has a gaussian distribution.\image
+
+Example: For an AlGaAs LD with $\lambda_0=0.82um, L=300um$, and a gain spectral width of $\Delta G_\lambda = 3nm$\\
+Find: (a) spacing between longitudinal modes:\\
+\[\Delta \lambda_{lm} = \frac{\lambda_0^2}{2Ln} = \frac(0.82*10^{-6}m)^2/(2(300*10^{-6}m)(36))=3.113*10^{-10}m\] (n from table 2-1; n = 3.6)\\
+\boxed{(\Delta \lambda)_{lm} = 0.3113 nm}\\
+(b) Total number of losing modes.
+\[ = \Delta G_\lambda/(\Delta \lambda)_{lm})=3nm/(0.311nm)\] 
+\boxed{ = 9.637\to9 modes}
+\subsection{Intensity Modulation of LD}
+Since lasing occurs for $I \geq I_{th}, I_{dc}$ is needed for both Digital and analog modulation.\image
+Threshold Current has a positive temperature coefficient. i.e. as temp increases, then I threshold $I_{th}$ increases.\image
+Optical gain phenomenon is used to make 1) S/C optical amplifiers (SOA; Semiconductor optical amplifier) and 2) Fiber amplifier (more popular) (EDFA).\\
+
+\subsection{Erbium Doped Fiber Amplifier (EDFA)}
+Core of fiber is doped with erbium (Er). Er is a rare earth element, with energy levels that can absorb incident radiation at \boxed{\lambda = 1480,980nm} and produce emission near 1550nm. Light source that is used to excite ion from ground level to higher energy levels is called PUMP SOURCE.\image
+This provides amplification for a modulating signal on an incident carrier wave near $\lambda=1.55um$.\\
+Implementation:\image
+It's better to operate in flat region when having multiple channels.\image
+Once the attenuation for this system reached a certain point, it was adopted over electrical domain amplifiers.\image
+
+3/12 Erbium Doped Fiber Amplifier (EDFA) Continued\\
+\image
+Gain of amplifier increases as Pump Power, $P_P$ increases. G increases initially at a rate of $\frac{5-dB}{1-mW of pump power}$, then the rate slows and Gain saturates.\image
+Any amplifier: (Amplifies incident signal) + (Amplifies incident noise) + (Adds amplifier own noise)\\
+This effects (S/N; signal noise ratio) at output, where
+\[\frac{S}{N}=\frac{<Avg. Signal Power>_{elec}}{<Avg. Noise Power>_{elec}}\]
+\image
+The effect of all noise at output relative to input is described by the Noise Figure, F:
+\boxed{F = \frac{(S/N)_{in}}{(S/N)_{out}}} which can be expressed as a ratio of powers or in dB.\\
+Example: An EDFA has $F=3.2$. If $(S/N)_{in}=50dB$, calculate $(S/N)_{out}$.\\
+\[10log_{10}[F=\frac{(S/N)_{in}}{(S/N)_{out}}]\]
+\[10log_{10}[F]=10log_{10}[(S/N)_{in}]-10log_{10}[(S/N)_{out}]\]
+\[F[dB]=(S/N)_{in}[]dB-(S/N)_{out}[dB]\]
+\[3.2=50-(S/N)_{out}\]
+\boxed{(S/N)_{out}=46.8dB}
+\image
+DFB laser ($\Delta \lambda$ narrow - single mode)\\
+VCSEL ( vertical cavity surface emitting laser)\\
+Tunable Laser (WDM; wavelength division multiplexing)\\
+\subsection{Light Detectors (Ch. 7)}
+Most commonly used light detectors in optical networks are based on internal photoelectric effect. They make use of the electric field "E" inherent in a S/C junction diode to produce external current.\image
+Energy absorbed from photons in an incident optical power $P_i$, generates electron-hole pairs (EHP).\image
+Electric field inside diode causes drift of generated carriers and produce external current, $I_{ph}$, if $\mathcal{E}_{ph} \geq \mathcal{E}_g$.
+
+However not all EHP's contribute to$I_{ph}$. The fraction that contributes is described by Quantum Efficiency:
+\[\eta=\frac{number of EHP generated/s that contribute to I_{ph}}{totem of incident photons per sec}\]
+Light detectors are characterized by \\
+1) Responsively, $\rho$\\
+2) Spectral Range [ i.e. useful $\lambda$ range]\\
+3) Speed of Response(i.e. rise/fall time, How fast?)\\
+Responsivity, $\rho$
+\[\rho=\frac{I_{ph}}{P_i}\]
+\[P_i=\text{(number of photons incident/sec)x(Energy/photon}=hf=\frac{hc}{\lambda})\]
+\[(\text{number of photons incident/sec})=\frac{P_i\lambda}{hc}\]
+\[\text{Using: }\eta:\text{(num of EHP generated/sec}=\eta(frac{P_i\lambda}{hc})=\eta \frac{P_i \lambda}{?}\]
+\[\to I_ph = e(\text{number of EHP generated/sec})\]
+\[I_{ph}=\frac{\eta e P_i \lambda}{h c}\]
+\[\to \rho = \frac{I_{ph}}{P_i}\]
+\boxed{\rho=\frac{e \eta \lambda}{hc}} or $\rho=\frac{ \eta \lambda}{1.24}[um]$\\
+This implies $\rho$ increases as $\lambda$ increases. However not indefinitely, but it drops sharply as $\lambda$ increases. Why?
+This happens because absorption coefficient of S/C material depends on $\lambda$. Hence $\eta$ must be optimized. For max $\rho$, $\eta$ must be optimized. For this examine depletion region in S/C pn diode.\image
+\[\to \eta=(1-R)e^{-\alpha W_1}[1-e^{-\alpha W_d}]\]
+1) Use antireflection coating to reduce R\\
+2) Make $W_1$ short\\
+3) Make $W_d$ long\\
+4) Choose material with high $\alpha$ value for operating $\lambda$\\
+\[\rho=\frac{\eta \lambda}{hc}\]
+Note: $\alpha$ drop rate is low initially as $\lambda$ increases, then drops sharply and $\eta$ decreases. \image
+\[\lambda=0.8um\text{ for Si or 1.555um for Ge (from Table 7.1)}\]
+\image
+\image
+
+3/24 - Photodiode Continued
+Receptivity \[\rho=\frac{I_{ph}}{P_i}\to I_{ph}=\rho P_i\]
+\image
+\subsection{Dynamic Range of Photodiode}
+Dynamic Range is the range for incident optic power, $P_i$, over which the photodiode response current, $I_{ph}$, shows linear variation with $P_i$, before saturation.\\
+\image
+Variation with $P_i$, before saturation. As $I_{ph}$ saturates, $V_0$ across $R_L$ also saturates.
+\image
+From front-end of RX (i.e. Photodiode reverse biased +$R_L$)
+\image
+At saturation:
+\[v_d = 0\]
+\[KVL:\sum V= 0 \to V_B-I_{ph}R_L+ v_d =0\]
+\[\text{At Saturation: }v_d=0\]
+or
+\[(I_{ph})_{max}=\frac{V_B}{R_L}=I_{saturation}\]
+\[(V_0)_{max} = (I_{ph})_{max}R_L\]
+
+Example: For a photodiode with $v_B=-20V, \rho = \frac{1}{2}x\frac{A}{W?N},R_L = 1M\Omega (10^6 \Omega)$.
+Find Dynamic Range:
+Assume Ideal Diode (i.e. $R_R = \infty,R_F=0 \to I_F = \infty, I_R = 0$)\\
+\[(I_{ph})_{max} = \frac{V_B}{R_L}=\frac{-20}{10^6 \Omega}=-20uA\]
+\[(V_0)=(I_{ph})_{max}R_L = (20x10^{-6}A)(10^6 \Omega)=20V\]
+\[\text{From }\rho = \frac{I_{ph}}{P_i}\]
+\[(P_i)_{max}=\frac{(I_{ph})_{max}}{\rho}=\frac{20x10^{-6}}{1/2}=40uW\]
+\image
+If $R_L = 10^4\Omega$
+\[\to(I_{ph})_{max}=\frac{V_B}{R_L}=\frac{-20V}{10^4}=-2x10^{-3}A=-2mA=-2000uA\]
+\[V_{max}=(I_{ph})_{max}R_L=(2mA)(10^4 \Omega) =20V\]
+For $(I_{ph})_{max} \to \infty$, need $R_L=0$. This could be realized using an op-amp of high-gain with feedback resistor,$R_F$ (Input impedance of op-amp = 0).
+\image
+Book equations ignore regions of diode where light doesn't generate current. Over simplified, don't use for homework.\\
+For optimizing Quantum efficiency $\eta$, recall:\\
+$W_d$ must be long\\
+$W_I$ must be short\\
+
+A diode structure that fulfills these conditions is pin diode.
+\image
+\[R=\frac{1}{\sigma}\frac{\rho}{A}\]
+image
+To ensure maximum drift velocity, $v_d$, a small reverse voltage,  $V_R$, can be applied (not necessarily needed).\\
+Transit time for EHP to drift through $E\neq 0$ layer is
+\[\tau_t=\frac{W_d}{v_d}\]
+\[\]
+\[\]
+Speed of Response:\\
+3 time factors that influence photodiode speed of response:\\
+1) Transit time, $\tau_t$\\
+2) Diffusion time, $\tau_d$\\
+3) RC time constant, $\tau_{RC}$\\
+$\tau_t$ dominates speed of response, but text book ignores $\tau_t, \tau_d$. It only uses $\tau_{RC}$ based on equation derived for LED. i.e.:\\
+\[\text{eq(7.2) }(f_{3-dB})_{elec}=\frac{0.35}{t_r}\]
+\[\text{eq(7.15) }t_r=2.197RC\]
+image
+\[e^{-\alpha x}\text{ignored in text}\]
+\[\text{Furthermore, text says } 2.197RC \leq \frac{t_r}{4}\text{ which does not hold}\]
+\[\tau_{RC}=RC\]
+Actually:\\
+For step input $P_i: t_r > 2.197RC$.\\
+For Analog modulated incident $P_i$:\\
+\[I_{ph}(t)=I_{ph}[1+m\frac{sin(\pi f_m \tau_t)}{\pi f_m \tau_t}sin(\omega_m t - \tau_t/2)]\]
+\[I_{ph} = \rho P_{dc}, \frac{sin(\pi f_m \tau_t)}{\pi f_m \tau_t}= \frac{1}{\sqrt{2}}\]
+\[\to (f_{3-dB})_{elec}= \frac{0.44}{\tau_t}\]
+Taking into consideration $e^{-\alpha x}$ factor which delays current response:
+\[\to (f_{3-dB})_{elec} = \frac{0.55}{\tau_t}\]
+\[\text{where} \tau_t = \frac{W_d}{v_d=10^5m/s=10^7cm/s}\]
+However, this can be obscured by
+\[(f_{3-dB}) = \frac{1}{2\pi RC}\]
+due to RC time constant.\\
+Example: Front end of Rx contains Si pin photodiodede of $W_i = 20 um$, junction area $=0.2mm^2$. and $R_L = 10 k\Omega$. (a) Compare $\tau_t$ to $\tau_{RC}$ , (b) Comment on $f_{3-dB}$, for Si: $\epsilon_r=11.8$\\
+\[\tau_t=\frac{W_d\approx W_i}{v_d}=\frac{20x10^{-6}m}{10^5m/s}=0.2ns\]
+\[\tau_{RC}=RC=(10x10^3)C\]
+\[C=\frac{\epsilon_0 \epsilon_r A}{W_i}=\frac{(8.854x10^{-12}F/m)(11.8)(0.2mm^2x(10^{-3}m/mm)^2)}{20x10^{-6}m}=1.0443x10^{-12}F\]
+\boxed{\tau_{RC}=(10^4)(1.0443x10^{-12})=10.443ns} for $\tau_{t} << \tau_{RC}$
+
+\end{document}  
